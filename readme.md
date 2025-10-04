@@ -3,7 +3,7 @@
 **Wondering how modern AI and automation can revolutionize your IT support experience?**  
 With SAHAYAKA, you get more than just a ticketing system: you get a powerful, user-friendly platform designed to streamline IT support, reduce resolution times, and empower users and support staff with intelligent automation and insightful analytics — all wrapped in a sleek, modern UI!
 
-> ![Dashboard](Screenshot(35).png)
+> ![Dashboard](Screenshot (35).png)
 
 ## ✨ What Makes SAHAYAKA Special?
 
@@ -18,7 +18,7 @@ With SAHAYAKA, you get more than just a ticketing system: you get a powerful, us
 
 ## 🌟 Features at a Glance
 
-![Ticket Modal](Screenshot(36).png)
+![Ticket Modal](Screenshot (36).png)
 
 - **Create Support Tickets:** Fully featured form with AI suggestions and validation, opening as a centered modal dialog.
 - **Ticket Overview:** Easy filtering, pagination, and detailed ticket views.
@@ -32,19 +32,19 @@ With SAHAYAKA, you get more than just a ticketing system: you get a powerful, us
 ## 📸 Screenshots
 
 ### Create Ticket Modal  
-> ![Create Ticket Dialog](Screenshot(36).png)
+> ![Create Ticket Dialog](Screenshot (36).png)
 
 ### AI Ticket Analysis  
-> ![AI Ticket Suggestions](Screenshot(37).png)
+> ![AI Ticket Suggestions](Screenshot (37).png)
 
 ### Ticket Management  
-> ![Tickets List](Screenshot(38).png)
+> ![Tickets List](Screenshot (38).png)
 
 ### AI Support Assistant  
-> ![AI Support Chatbot](Screenshot(39).png)
+> ![AI Support Chatbot](Screenshot (39).png)
 
 ### Knowledge Base  
-> ![Knowledge Base](Screenshot(40).png)
+> ![Knowledge Base](Screenshot (40).png)
 
 ---
 
@@ -111,4 +111,5 @@ Feel free to open an issue, fork the project, or reach out for collaboration and
 ---
 
 > _“With SAHAYAKA, every ticket gets the right attention — fast, smart, and effective.”_
+
 
