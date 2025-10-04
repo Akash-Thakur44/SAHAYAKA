@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAHAYAKA - Smart IT Helpdesk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-background-overlay"></div>
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/4965c12f-bfe8-4f8b-9126-67e44692b266.png" alt="SAHAYAKA Logo" class="logo-image">
+                </div>
+                <h1 class="login-title">SAHAYAKA</h1>
+                <p class="login-subtitle">Smart IT Helpdesk Solution</p>
+                <div class="login-hero-image">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1754733616/pplx_project_search_images/349f731998ccb1f5563dc84de6e7365c5d6b45e6.png" alt="IT Support Team" class="hero-image">
+                </div>
+            </div>
+            <div class="login-form">
+                <div class="form-group">
+                    <label class="form-label">Select Your Role</label>
+                    <select id="user-role" class="form-control">
+                        <option value="">Choose your role...</option>
+                        <option value="employee">Employee</option>
+                        <option value="agent">IT Support Agent</option>
+                        <option value="admin">IT Administrator</option>
+                    </select>
+                </div>
+                <button id="login-btn" class="btn btn--primary btn--full-width">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="app-container hidden">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/4965c12f-bfe8-4f8b-9126-67e44692b266.png" alt="SAHAYAKA" class="nav-logo">
+                <h2>SAHAYAKA</h2>
+                <span id="user-role-badge" class="role-badge"></span>
+            </div>
+            <div class="nav-menu">
+                <button id="nav-dashboard" class="nav-link active">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </button>
+                <button id="nav-tickets" class="nav-link">
+                    <span class="nav-icon">🎫</span>
+                    Tickets
+                </button>
+                <button id="nav-knowledge" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    Knowledge Base
+                </button>
+                <button id="nav-analytics" class="nav-link admin-only">
+                    <span class="nav-icon">📈</span>
+                    Analytics
+                </button>
+                <button id="nav-chat" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    Help Chat
+                </button>
+            </div>
+            <button id="logout-btn" class="btn btn--outline btn--sm">Logout</button>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section">
+            <div class="dashboard-hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Welcome to Your IT Dashboard</h1>
+                        <p class="hero-subtitle">Manage tickets, track performance, and get instant support</p>
+                        <button id="create-ticket-btn" class="btn btn--primary btn--hero employee-only">
+                            <span class="btn-icon">➕</span>
+                            Create New Ticket
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- Metrics Cards -->
+                <div class="metrics-section">
+                    <h2 class="section-title">Performance Overview</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card metric-primary">
+                            <div class="metric-icon">🎫</div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="total-tickets">0</div>
+                                <div class="metric-label">Total Tickets</div>
+                            </div>
+                        </div>
+                        <div class="metric-card metric-warning">
+                            <div class="metric-icon">⏳</div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="open-tickets">0</div>
+                                <div class="metric-label">Open Tickets</div>
+                            </div>
+                        </div>
+                        <div class="metric-card metric-info">
+                            <div class="metric-icon">⚙️</div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="in-progress-tickets">0</div>
+                                <div class="metric-label">In Progress</div>
+                            </div>
+                        </div>
+                        <div class="metric-card metric-success">
+                            <div class="metric-icon">✅</div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="resolved-tickets">0</div>
+                                <div class="metric-label">Resolved</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Tickets -->
+                <div class="recent-tickets-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Tickets</h2>
+                        <div class="section-decoration"></div>
+                    </div>
+                    <div id="recent-tickets-list" class="tickets-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tickets Section -->
+        <div id="tickets" class="content-section hidden">
+            <div class="section-hero">
+                <div class="container">
+                    <div class="section-hero-content">
+                        <div class="section-hero-text">
+                            <h1 class="section-hero-title">Ticket Management</h1>
+                            <p class="section-hero-subtitle">Track, manage, and resolve support requests efficiently</p>
+                        </div>
+                        <div class="category-icons">
+                            <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/c99cb1cc-a46d-4e5b-b1cd-e886846ff3c2.png" alt="Support Categories" class="category-icons-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="tickets-controls">
+                    <div class="tickets-actions">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="ticket-search" class="form-control search-input" placeholder="Search tickets...">
+                        </div>
+                        <select id="ticket-filter" class="form-control filter-select">
+                            <option value="">All Statuses</option>
+                            <option value="New">New</option>
+                            <option value="Open">Open</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="tickets-list" class="tickets-list"></div>
+            </div>
+        </div>
+
+        <!-- Knowledge Base Section -->
+        <div id="knowledge" class="content-section hidden">
+            <div class="section-hero kb-hero">
+                <div class="container">
+                    <h1 class="section-hero-title">Knowledge Base</h1>
+                    <p class="section-hero-subtitle">Find answers and solutions to common IT issues</p>
+                    <div class="knowledge-search">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="kb-search" class="form-control search-input" placeholder="Search knowledge base...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div id="kb-articles" class="kb-articles"></div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics" class="content-section hidden">
+            <div class="section-hero analytics-hero">
+                <div class="container">
+                    <div class="analytics-hero-content">
+                        <div>
+                            <h1 class="section-hero-title">Analytics & Reports</h1>
+                            <p class="section-hero-subtitle">Monitor performance and track key metrics</p>
+                        </div>
+                        <div class="analytics-background">
+                            <img src="https://pplx-res.cloudinary.com/image/upload/v1755510958/pplx_project_search_images/990fd37cdcfc05794efe85d778d7f1d734d83e87.png" alt="Server Infrastructure" class="analytics-bg-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="analytics-grid">
+                    <div class="analytics-card chart-card">
+                        <div class="card-header">
+                            <h3>Ticket Distribution</h3>
+                            <span class="card-subtitle">By Category</span>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="ticket-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card sla-card">
+                        <div class="card-header">
+                            <h3>SLA Performance</h3>
+                            <span class="card-subtitle">Current Metrics</span>
+                        </div>
+                        <div class="sla-metrics">
+                            <div class="sla-item">
+                                <div class="sla-icon">⏱️</div>
+                                <div class="sla-content">
+                                    <span class="sla-label">Average Resolution Time</span>
+                                    <span class="sla-value" id="avg-resolution">0</span>
+                                </div>
+                            </div>
+                            <div class="sla-item">
+                                <div class="sla-icon">📊</div>
+                                <div class="sla-content">
+                                    <span class="sla-label">SLA Compliance</span>
+                                    <span class="sla-value" id="sla-compliance">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div id="chat" class="content-section hidden">
+            <div class="section-hero chat-hero">
+                <div class="container">
+                    <div class="chat-hero-content">
+                        <div>
+                            <h1 class="section-hero-title">AI Support Assistant</h1>
+                            <p class="section-hero-subtitle">Get instant help with your IT issues</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <h3>SAHAYAKA AI Assistant</h3>
+                            <span class="chat-status">
+                                <span class="status-indicator"></span>
+                                Online & Ready to Help
+                            </span>
+                        </div>
+                        <div class="chat-avatar">
+                            🤖
+                        </div>
+                    </div>
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="chat-message bot-message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <div class="message-text">
+                                    Hello! I'm SAHAYAKA AI Assistant. How can I help you with your IT issues today?
+                                </div>
+                                <div class="message-time">Now</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chat-input-field" class="form-control chat-input-field" placeholder="Type your message...">
+                        <button id="send-chat" class="btn btn--primary chat-send-btn">
+                            <span class="send-icon">📤</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Ticket Modal -->
+    <div id="create-ticket-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-section">
+                    <span class="modal-icon">🎫</span>
+                    <h3>Create New Support Ticket</h3>
+                </div>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="create-ticket-form">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label">Issue Title</label>
+                        <input type="text" id="ticket-title" class="form-control" placeholder="Brief description of your issue..." required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Detailed Description</label>
+                        <textarea id="ticket-description" class="form-control" rows="4" placeholder="Provide detailed information about the problem you're experiencing..." required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select id="ticket-category" class="form-control" required>
+                                <option value="">AI will suggest...</option>
+                                <option value="Network">Network Issues</option>
+                                <option value="Software">Software Problems</option>
+                                <option value="Hardware">Hardware Issues</option>
+                                <option value="Security">Security Concerns</option>
+                                <option value="Access Management">Access & Permissions</option>
+                                <option value="Email Issues">Email Problems</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Priority Level</label>
+                            <select id="ticket-priority" class="form-control" required>
+                                <option value="">AI will determine...</option>
+                                <option value="Low">Low - Minor inconvenience</option>
+                                <option value="Medium">Medium - Affecting work</option>
+                                <option value="High">High - Blocking work</option>
+                                <option value="Critical">Critical - System down</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ai-suggestions" id="ai-suggestions"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn--outline modal-close">Cancel</button>
+                    <button type="submit" class="btn btn--primary">
+                        <span class="btn-icon">✨</span>
+                        Create Ticket
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ticket Detail Modal -->
+    <div id="ticket-detail-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ticket-detail-title">Ticket Details</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="ticket-detail-content"></div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notifications" class="notifications-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
